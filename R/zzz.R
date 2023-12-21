@@ -22,9 +22,10 @@ find_system_python <- function() {
 
 setup_cgnf <- function(python_path) {
   envname <- "cgnf_env"
-
-  if (!reticulate::virtualenv_exists(envname)) {
-    reticulate::virtualenv_create(envname, python = python_path)
+  venv_path <- if (.Platform$OS.type == "windows") {
+    file.path(Sys.getenv("HOME"), ".virtualenvs", envname)
+  } else {
+    file.path(Sys.getenv("HOME"), ".virtualenvs", envname)
   }
 
   reticulate::use_virtualenv(envname, required = TRUE)
@@ -63,7 +64,7 @@ setup_cgnf <- function(python_path) {
 
   # Construct the path to the Python executable in the virtual environment
   venv_python <- if (.Platform$OS.type == "windows") {
-    file.path(Sys.getenv("HOME"), "AppData", "Local", "virtualenvs", "cgnf_env", "Scripts", "python.exe")
+    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env", "Scripts", "python.exe")
   } else {
     file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env", "bin", "python")
   }
