@@ -155,12 +155,12 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
         test_size=0.2,  # Proportion of data used for the validation set
         cat_var=c('X', 'Y'),  # List of categorical variables
         sens_corr=dict(list(tuple("A", "Y") = 0.15, tuple("M", "Y") = 0.2)), # Vector of sensitivity parameters (i.e., normalized disturbance correlations)
-        seed=None  # Seed for reproducibility
+        seed=NULL  # Seed for reproducibility
     )
    ```
 
    *Notes*:
-   - `cat_var`: If the dataset has no categorical variables, set `cat_var=None`.
+   - `cat_var`: If the dataset has no categorical variables, set `cat_var=NULL`.
 
    - `sens_corr`: If specified, the train and sim functions will produce bias-adjusted estimates using the supplied disturbance correlations.
    
@@ -180,7 +180,7 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
         trn_batch_size=128,  # Training batch size
         val_batch_size=2048,  # Validation batch size
         learning_rate=1e-4,  # Learning rate
-        seed=None,  # Seed for reproducibility
+        seed=NULL,  # Seed for reproducibility
         nb_epoch=50000,  # Number of total epochs
         emb_net=c(90, 80, 60, 50),  # Architecture of the embedding network (nodes per hidden layer)
         int_net=c(50, 40, 30, 20),  # Architecture of the integrand network (nodes per hidden layer)
@@ -223,11 +223,11 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
 
      For continuous moderators or those with over ten categories, the outcomes are displayed based on quantiles, determined by `quant_mod`. By default, with `quant_mod=4`, the moderator values are divided on **quartiles**.
 
-     When conditional treatment effects are not of interest, or the dataset has no moderators, set `moderator=None`.
+     When conditional treatment effects are not of interest, or the dataset has no moderators, set `moderator=NULL`.
 
    - `mediator`: Multiple mediators are permitted. When specifying several mediators, ensure they are supplied in their causal order, in which case the function returns a set of path-specific effects.
 
-     When direct, indirect, or path-specific effects are not of interest, or the dataset has no mediators, set `mediator=None`.
+     When direct, indirect, or path-specific effects are not of interest, or the dataset has no mediators, set `mediator=NULL`.
 
      Moderated mediation analysis is available by specifying the `moderator` and `mediator` parameters simultaneously.
 
@@ -280,7 +280,7 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
    *Notes*:
    - The function generates a file named `<dataset_name>_result.csv` under `base_path`, which contains all the potential outcome results from each bootstrap iteration.
 
-   - To skip certain stages, you can add `skip_process=True`, `skip_train=True`, or set `sim_args_list=None`.
+   - To skip certain stages, you can add `skip_process=True`, `skip_train=True`, or set `sim_args_list=NULL`.
      
    - The function generates `n_iterations` number of folders under `base_path`, each named with the `folder_name` followed by an iteration suffix.
      
