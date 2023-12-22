@@ -51,7 +51,6 @@ This guide will help you install and utilize `RcGNF` within an R environment.
 
 ---
 
----
 
 ## Setting up a Dataset
 
@@ -71,47 +70,39 @@ This guide will help you install and utilize `RcGNF` within an R environment.
 
 ### Specifying a Directed Acyclic Graph (DAG)
 
-   `cGNF` utilizes an adjacency matrix in CSV format to recognize a DAG. Use the following steps in Python to generate an adjacency matrix:
+   `RcGNF` utilizes an adjacency matrix in CSV format to recognize a DAG. Use the following steps in Python to generate an adjacency matrix:
     
    #### a. **Import Required Libraries**:
     
-   ```python
-    import collections.abc
-    collections.Iterable = collections.abc.Iterable 
-    import networkx as nx 
-    from causalgraphicalmodels import CausalGraphicalModel     
+   ```R
+   library(igraph)
    ```
     
    #### b. **Draw the DAG**:
     
-   Define your DAG structure using the `CausalGraphicalModel`:
+   Define your DAG structure using the `igraph`:
     
    ```python
-    Your_DAG_name = CausalGraphicalModel(
-        nodes=["var1", "var2", ...],
-        edges=[("parent", "child"), ...]
-    )
+   Your_DAG_name <- graph_from_edgelist(matrix(c("parent", "child"), ncol = 2, byrow = TRUE), directed = TRUE)
    ```
     
    For example, with a simple DAG X &rarr; Y &rarr; Z, the argument will be as follows:
     
    ```python
-   Simple_DAG = CausalGraphicalModel(
-       nodes=["X", "Y", "Z"],
-       edges=[("X", "Y"), ("Y", "Z")]
-   )
+   Simple_DAG <- graph_from_edgelist(matrix(c("X", "Y", "Y", "Z"), ncol = 2, byrow = TRUE), directed = TRUE)
    ```
     
    #### c. **Convert the DAG to an Adjacency Matrix**:
     
    ```python
-   your_adj_mat_name = nx.to_pandas_adjacency(Your_DAG_name.dag, dtype=int)
+   your_adj_mat_name <- as.matrix(as_adjacency_matrix(Your_DAG_name, type = "both", attr = NULL, sparse = FALSE))
+   your_adj_mat_name <- as.data.frame(your_adj_mat_name)
    ```
     
    Save the matrix as a CSV file:
     
    ```python
-   your_adj_mat_name.to_csv('/path_to_data_directory/' + 'your_adj_mat_name' + '.csv')
+   write.csv(your_adj_mat_name, file = paste0('/path_to_data_directory/', 'your_adj_mat_name', '.csv'), row.names = TRUE)
    ```
     
    #### d. **Manually Create an Adjacency Matrix**:
