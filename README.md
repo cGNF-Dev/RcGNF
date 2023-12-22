@@ -39,8 +39,6 @@ This guide will help you install and utilize `RcGNF` within an R environment.
    devtools::install_github("cGNF-Dev/RcGNF")
    ```
 
-   Replace `"username/RcGNF"` with the actual GitHub repository path.
-
 3. **Load RcGNF**:
 
    Once installed, load the package using:
