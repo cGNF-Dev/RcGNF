@@ -245,23 +245,23 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
 
    ```R
    process_args <- list(
-      "seed": 2121380
+      seed = 2121380
    )
 
    train_args <- list(
-      "seed": 2121380
+      seed = 2121380
    )
 
    sim_args1 <- list(
-      "treatment": 'A',
-      "outcome": 'Y',
-      "inv_datafile_name": 'A_Y'
+      treatment = 'A',
+      outcome = 'Y',
+      inv_datafile_name = 'A_Y'
    )
 
    sim_args2 <- list(
-      "treatment": 'C',
-      "outcome": 'Y',
-      "inv_datafile_name": 'C_Y'
+      treatment = 'C',
+      outcome = 'Y',
+      inv_datafile_name = 'C_Y'
    )
 
     bootstrap(
