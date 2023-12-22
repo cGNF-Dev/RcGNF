@@ -2,15 +2,15 @@
 
 ## About RcGNF
 
-RcGNF is the R package wrapper for causal-Graphical Normalizing Flows (cGNF), a deep learning-based tool designed to answer causal questions using normalizing flows. It builds upon Graphical Normalizing Flows (GNFs) and Unconstrained Monotonic Neural Networks (UMNNs), with a focus on causality within a Directed Acyclic Graph (DAG) framework. RcGNF allows R users to integrate the advanced capabilities of cGNF into their data analysis workflows seamlessly.
+RcGNF is the R package wrapper for causal-Graphical Normalizing Flows (cGNF), a deep learning-based tool designed to answer causal questions using normalizing flows. It builds upon Graphical Normalizing Flows ([GNFs](https://github.com/AWehenkel/Graphical-Normalizing-Flows)) and Unconstrained Monotonic Neural Networks ([UMNNs](https://github.com/AWehenkel/UMNN)), with a focus on causality within a Directed Acyclic Graph (DAG) framework. `RcGNF` allows R users to integrate the advanced capabilities of cGNF into their data analysis workflows seamlessly.
 
 ---
 
 ## User Guide
 
-This guide will help you install and utilize RcGNF within an R environment. It assumes familiarity with basic R programming. Users new to R are encouraged to familiarize themselves with the language before proceeding. 
+This guide will help you install and utilize `RcGNF` within an R environment. 
 
----
+
 ### Tutorial Contents
 
 1. [Setting up RcGNF](#setting-up-rcgnf)
@@ -36,17 +36,17 @@ This guide will help you install and utilize RcGNF within an R environment. It a
    In R or RStudio, install the RcGNF package using the following command:
 
    ```R
-   devtools::install_github("username/rcGNF")
+   devtools::install_github("cGNF-Dev/RcGNF")
    ```
 
-   Replace `"username/rcGNF"` with the actual GitHub repository path.
+   Replace `"username/RcGNF"` with the actual GitHub repository path.
 
 3. **Load RcGNF**:
 
    Once installed, load the package using:
 
    ```R
-   library(rcGNF)
+   library(RcGNF)
    ```
 
 ---
@@ -144,7 +144,7 @@ This guide will help you install and utilize RcGNF within an R environment. It a
 
 ### Essential Functions
 
-`cGNF` is implemented in three stages, corresponding to three separate Python functions:
+`RcGNF` is implemented in three stages, corresponding to three separate Python functions:
 
 1. **`process`**: Prepares the dataset and adjacency matrix.
    
@@ -158,15 +158,14 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
 
 ### Data Preprocessing
 
-   ```python
-    from cGNF import process
+   ```R
     process(
         path='/path_to_data_directory/',  # File path where the dataset and DAG are located
         dataset_name='your_dataset_name',  # Name of the dataset
         dag_name= 'you_adj_mat_name',  # Name of the adjacency matrix (DAG) to be used
         test_size=0.2,  # Proportion of data used for the validation set
-        cat_var=['X', 'Y'],  # List of categorical variables
-        sens_corr={("X", "Y"):0.2, ("C","Y"):0.1}, # Vector of sensitivity parameters (i.e., normalized disturbance correlations)
+        cat_var=c('X', 'Y'),  # List of categorical variables
+        sens_corr=dict(list(tuple("A", "Y") = 0.15, tuple("M", "Y") = 0.2)), # Vector of sensitivity parameters (i.e., normalized disturbance correlations)
         seed=None  # Seed for reproducibility
     )
    ```
@@ -184,8 +183,7 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
 
 ### Training
    
-   ```python
-    from cGNF import train
+   ```R
     train(
         path='/path_to_data_directory/',  # File path where the PKL file is located
         dataset_name='your_dataset_name',  # Name of the dataset
@@ -195,8 +193,8 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
         learning_rate=1e-4,  # Learning rate
         seed=None,  # Seed for reproducibility
         nb_epoch=50000,  # Number of total epochs
-        emb_net=[90, 80, 60, 50],  # Architecture of the embedding network (nodes per hidden layer)
-        int_net=[50, 40, 30, 20],  # Architecture of the integrand network (nodes per hidden layer)
+        emb_net=c(90, 80, 60, 50),  # Architecture of the embedding network (nodes per hidden layer)
+        int_net=c(50, 40, 30, 20),  # Architecture of the integrand network (nodes per hidden layer)
         nb_estop=50,  # Number of epochs for early stopping
         val_freq=1  # Frequency per epoch with which the validation loss is computed
     )
@@ -211,18 +209,17 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
 
 ### Estimation
 
-   ```python
-    from cGNF import sim
+   ```R
     sim(
         path='/path_to_data_directory/',  # File path where the PKL file is located
         dataset_name='your_dataset_name',  # Name of the dataset
         model_name='models',  # Name of the folder where the trained model is located
         n_mce_samples=50000,  #  Number of Monte Carlo draws from the trained distribution model
         treatment='X',  # Treatment variable
-        cat_list=[0, 1],  # Treatment values for counterfactual outcomes
-        moderator=['C'],  # Specify to conduct moderation analysis (i.e., compute effects conditional on the supplied moderator)
+        cat_list=c(0, 1),  # Treatment values for counterfactual outcomes
+        moderator='C',  # Specify to conduct moderation analysis (i.e., compute effects conditional on the supplied moderator)
         quant_mod=4,  # If the moderator is continuous, specify the number of quantiles used to evaluate the conditional effects
-        mediator=['M1', 'M2'],  # List mediators for mediation analysis (i.e., to compute direct, indirect, or path-specific effects)
+        mediator=c('M1', 'M2'),  # List mediators for mediation analysis (i.e., to compute direct, indirect, or path-specific effects)
         outcome='Y',   # Outcome variable
         inv_datafile_name='your_counterfactual_dataset'  # Name of the file where Monte Carlo samples are saved
     )
@@ -257,28 +254,27 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
 
 ### Bootstrapping
 
-   ```python
-   process_args={
+   ```R
+   process_args <- list(
       "seed": 2121380
-      }
+   )
 
-   train_args={
+   train_args <- list(
       "seed": 2121380
-      }
+   )
 
-   sim_args1={
+   sim_args1 <- list(
       "treatment": 'A',
       "outcome": 'Y',
       "inv_datafile_name": 'A_Y'
-      }
+   )
 
-   sim_args2={
+   sim_args2 <- list(
       "treatment": 'C',
       "outcome": 'Y',
       "inv_datafile_name": 'C_Y'
-      }
+   )
 
-    from cGNF import bootstrap
     bootstrap(
        n_iterations=10,  # Number of bootstrap iterations
        num_cores_reserve=2,  # Number of cores to reserve
@@ -288,7 +284,7 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
        dag_name=dataset_name + '_DAG',  # Name of the DAG file associated with the dataset
        process_args=process_args,  # Arguments for the data preprocessing function
        train_args=train_args,  # Arguments for the model training function
-       sim_args_list=[sim_args1, sim_args2]  # List of arguments for multiple estimation configurations
+       sim_args_list= list(sim_args1, sim_args2)  # List of arguments for multiple estimation configurations
     )
    ```
 
