@@ -81,26 +81,26 @@ This guide will help you install and utilize `RcGNF` within an R environment.
    Define your DAG structure using the `igraph`:
     
    ```python
-   Your_DAG_name <- graph_from_edgelist(matrix(c("parent", "child"), ncol = 2, byrow = TRUE), directed = TRUE)
+   Your_DAG_name <- graph_from_edgelist(matrix(c("parent", "child"), ncol  =  2, byrow  =  TRUE), directed  =  TRUE)
    ```
     
    For example, with a simple DAG X &rarr; Y &rarr; Z, the argument will be as follows:
     
    ```python
-   Simple_DAG <- graph_from_edgelist(matrix(c("X", "Y", "Y", "Z"), ncol = 2, byrow = TRUE), directed = TRUE)
+   Simple_DAG <- graph_from_edgelist(matrix(c("X", "Y", "Y", "Z"), ncol  =  2, byrow  =  TRUE), directed  =  TRUE)
    ```
     
    #### c. **Convert the DAG to an Adjacency Matrix**:
     
    ```python
-   your_adj_mat_name <- as.matrix(as_adjacency_matrix(Your_DAG_name, type = "both", attr = NULL, sparse = FALSE))
+   your_adj_mat_name <- as.matrix(as_adjacency_matrix(Your_DAG_name, type  =  "both", attr  =  NULL, sparse  =  FALSE))
    your_adj_mat_name <- as.data.frame(your_adj_mat_name)
    ```
     
    Save the matrix as a CSV file:
     
    ```python
-   write.csv(your_adj_mat_name, file = paste0('/path_to_data_directory/', 'your_adj_mat_name', '.csv'), row.names = TRUE)
+   write.csv(your_adj_mat_name, file  =  paste0('/path_to_data_directory/', 'your_adj_mat_name', '.csv'), row.names  =  TRUE)
    ```
     
    #### d. **Manually Create an Adjacency Matrix**:
@@ -149,18 +149,18 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
 
    ```R
     process(
-        path='/path_to_data_directory/',  # File path where the dataset and DAG are located
-        dataset_name='your_dataset_name',  # Name of the dataset
-        dag_name= 'you_adj_mat_name',  # Name of the adjacency matrix (DAG) to be used
-        test_size=0.2,  # Proportion of data used for the validation set
-        cat_var=c('X', 'Y'),  # List of categorical variables
-        sens_corr=dict(list(tuple("A", "Y") = 0.15, tuple("M", "Y") = 0.2)), # Vector of sensitivity parameters (i.e., normalized disturbance correlations)
-        seed=NULL  # Seed for reproducibility
+        path = '/path_to_data_directory/',  # File path where the dataset and DAG are located
+        dataset_name = 'your_dataset_name',  # Name of the dataset
+        dag_name =  'you_adj_mat_name',  # Name of the adjacency matrix (DAG) to be used
+        test_size = 0.2,  # Proportion of data used for the validation set
+        cat_var = c('X', 'Y'),  # List of categorical variables
+        sens_corr = dict(list(tuple("A", "Y")  =  0.15, tuple("M", "Y")  =  0.2)), # Vector of sensitivity parameters (i.e., normalized disturbance correlations)
+        seed = NULL  # Seed for reproducibility
     )
    ```
 
    *Notes*:
-   - `cat_var`: If the dataset has no categorical variables, set `cat_var=NULL`.
+   - `cat_var`: If the dataset has no categorical variables, set `cat_var = NULL`.
 
    - `sens_corr`: If specified, the train and sim functions will produce bias-adjusted estimates using the supplied disturbance correlations.
    
@@ -174,18 +174,18 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
    
    ```R
     train(
-        path='/path_to_data_directory/',  # File path where the PKL file is located
-        dataset_name='your_dataset_name',  # Name of the dataset
-        model_name='models',  # Name of the folder where the trained model will be saved
-        trn_batch_size=128,  # Training batch size
-        val_batch_size=2048,  # Validation batch size
-        learning_rate=1e-4,  # Learning rate
-        seed=NULL,  # Seed for reproducibility
-        nb_epoch=50000,  # Number of total epochs
-        emb_net=c(90, 80, 60, 50),  # Architecture of the embedding network (nodes per hidden layer)
-        int_net=c(50, 40, 30, 20),  # Architecture of the integrand network (nodes per hidden layer)
-        nb_estop=50,  # Number of epochs for early stopping
-        val_freq=1  # Frequency per epoch with which the validation loss is computed
+        path = '/path_to_data_directory/',  # File path where the PKL file is located
+        dataset_name = 'your_dataset_name',  # Name of the dataset
+        model_name = 'models',  # Name of the folder where the trained model will be saved
+        trn_batch_size = 128,  # Training batch size
+        val_batch_size = 2048,  # Validation batch size
+        learning_rate = 1e-4,  # Learning rate
+        seed = NULL,  # Seed for reproducibility
+        nb_epoch = 50000,  # Number of total epochs
+        emb_net = c(90, 80, 60, 50),  # Architecture of the embedding network (nodes per hidden layer)
+        int_net = c(50, 40, 30, 20),  # Architecture of the integrand network (nodes per hidden layer)
+        nb_estop = 50,  # Number of epochs for early stopping
+        val_freq = 1  # Frequency per epoch with which the validation loss is computed
     )
    ```
 
@@ -200,17 +200,17 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
 
    ```R
     sim(
-        path='/path_to_data_directory/',  # File path where the PKL file is located
-        dataset_name='your_dataset_name',  # Name of the dataset
-        model_name='models',  # Name of the folder where the trained model is located
-        n_mce_samples=50000,  #  Number of Monte Carlo draws from the trained distribution model
-        treatment='X',  # Treatment variable
-        cat_list=c(0, 1),  # Treatment values for counterfactual outcomes
-        moderator='C',  # Specify to conduct moderation analysis (i.e., compute effects conditional on the supplied moderator)
-        quant_mod=4,  # If the moderator is continuous, specify the number of quantiles used to evaluate the conditional effects
-        mediator=c('M1', 'M2'),  # List mediators for mediation analysis (i.e., to compute direct, indirect, or path-specific effects)
-        outcome='Y',   # Outcome variable
-        inv_datafile_name='your_counterfactual_dataset'  # Name of the file where Monte Carlo samples are saved
+        path = '/path_to_data_directory/',  # File path where the PKL file is located
+        dataset_name = 'your_dataset_name',  # Name of the dataset
+        model_name = 'models',  # Name of the folder where the trained model is located
+        n_mce_samples = 50000,  #  Number of Monte Carlo draws from the trained distribution model
+        treatment = 'X',  # Treatment variable
+        cat_list = c(0, 1),  # Treatment values for counterfactual outcomes
+        moderator = 'C',  # Specify to conduct moderation analysis (i.e., compute effects conditional on the supplied moderator)
+        quant_mod = 4,  # If the moderator is continuous, specify the number of quantiles used to evaluate the conditional effects
+        mediator = c('M1', 'M2'),  # List mediators for mediation analysis (i.e., to compute direct, indirect, or path-specific effects)
+        outcome = 'Y',   # Outcome variable
+        inv_datafile_name = 'your_counterfactual_dataset'  # Name of the file where Monte Carlo samples are saved
     )
    ```
 
@@ -221,13 +221,13 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
 
    - `moderator`: If the moderator is categorical and has fewer than 10 categories, the function will display potential outcomes based on different moderator values.
 
-     For continuous moderators or those with over ten categories, the outcomes are displayed based on quantiles, determined by `quant_mod`. By default, with `quant_mod=4`, the moderator values are divided on **quartiles**.
+     For continuous moderators or those with over ten categories, the outcomes are displayed based on quantiles, determined by `quant_mod`. By default, with `quant_mod = 4`, the moderator values are divided on **quartiles**.
 
-     When conditional treatment effects are not of interest, or the dataset has no moderators, set `moderator=NULL`.
+     When conditional treatment effects are not of interest, or the dataset has no moderators, set `moderator = NULL`.
 
    - `mediator`: Multiple mediators are permitted. When specifying several mediators, ensure they are supplied in their causal order, in which case the function returns a set of path-specific effects.
 
-     When direct, indirect, or path-specific effects are not of interest, or the dataset has no mediators, set `mediator=NULL`.
+     When direct, indirect, or path-specific effects are not of interest, or the dataset has no mediators, set `mediator = NULL`.
 
      Moderated mediation analysis is available by specifying the `moderator` and `mediator` parameters simultaneously.
 
@@ -265,22 +265,22 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
    )
 
     bootstrap(
-       n_iterations=10,  # Number of bootstrap iterations
-       num_cores_reserve=2,  # Number of cores to reserve
-       base_path='/path_to_data_directory/',  # Base directory where the dataset and DAG are located
-       folder_name='bootstrap_2k',  # Folder name for this bootstrap session
-       dataset_name=dataset_name,  # Name of the dataset being used
-       dag_name=dataset_name + '_DAG',  # Name of the DAG file associated with the dataset
-       process_args=process_args,  # Arguments for the data preprocessing function
-       train_args=train_args,  # Arguments for the model training function
-       sim_args_list= list(sim_args1, sim_args2)  # List of arguments for multiple estimation configurations
+       n_iterations = 10,  # Number of bootstrap iterations
+       num_cores_reserve = 2,  # Number of cores to reserve
+       base_path = '/path_to_data_directory/',  # Base directory where the dataset and DAG are located
+       folder_name = 'bootstrap_2k',  # Folder name for this bootstrap session
+       dataset_name = dataset_name,  # Name of the dataset being used
+       dag_name = dataset_name + '_DAG',  # Name of the DAG file associated with the dataset
+       process_args = process_args,  # Arguments for the data preprocessing function
+       train_args = train_args,  # Arguments for the model training function
+       sim_args_list =  list(sim_args1, sim_args2)  # List of arguments for multiple estimation configurations
     )
    ```
 
    *Notes*:
    - The function generates a file named `<dataset_name>_result.csv` under `base_path`, which contains all the potential outcome results from each bootstrap iteration.
 
-   - To skip certain stages, you can add `skip_process=True`, `skip_train=True`, or set `sim_args_list=NULL`.
+   - To skip certain stages, you can add `skip_process = TRUE`, `skip_train = TRUE`, or set `sim_args_list = NULL`.
      
    - The function generates `n_iterations` number of folders under `base_path`, each named with the `folder_name` followed by an iteration suffix.
      
