@@ -296,8 +296,6 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
    - The function generates `n_iterations` number of folders under `base_path`, each named with the `folder_name` followed by an iteration suffix.
      
    - `base_path`, `dataset_name`, and `dag_name` are automatically included in `process_args`, `train_args`, and `sim_args_list`, so you don't need to specify them separately for each set of arguments.
-     
-   - When specifying parameters in each set of arguments (`_args`), enclose parameter names in single (`'`) or double (`"`) quotes and use a colon (`:`) instead of an equals sign (`=`) for assignment.
 
 #### Remember to adjust paths, environment names, and other placeholders.
 
