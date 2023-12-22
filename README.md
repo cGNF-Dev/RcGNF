@@ -2,7 +2,7 @@
 
 ## About RcGNF
 
-RcGNF is the R package wrapper for causal-Graphical Normalizing Flows (cGNF), a deep learning-based tool designed to answer causal questions using normalizing flows. It builds upon Graphical Normalizing Flows ([GNFs](https://github.com/AWehenkel/Graphical-Normalizing-Flows)) and Unconstrained Monotonic Neural Networks ([UMNNs](https://github.com/AWehenkel/UMNN)), with a focus on causality within a Directed Acyclic Graph (DAG) framework. `RcGNF` allows R users to integrate the advanced capabilities of cGNF into their data analysis workflows seamlessly.
+`RcGNF` is the R package wrapper for causal-Graphical Normalizing Flows (cGNF), a deep learning-based tool designed to answer causal questions using normalizing flows. It builds upon Graphical Normalizing Flows ([GNFs](https://github.com/AWehenkel/Graphical-Normalizing-Flows)) and Unconstrained Monotonic Neural Networks ([UMNNs](https://github.com/AWehenkel/UMNN)), with a focus on causality within a Directed Acyclic Graph (DAG) framework. `RcGNF` allows R users to integrate the advanced capabilities of cGNF into their data analysis workflows seamlessly.
 
 ---
 
