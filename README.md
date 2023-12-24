@@ -31,15 +31,24 @@ This guide will help you install and utilize `RcGNF` within an R environment.
    
    Ensure you have the latest version of R installed on your system.
 
-2. **Install RcGNF**:
+2. **Install Python**:
+   
+   RcGNF requires Python 3.9. Ensure you have Python 3.9 installed, other versions may not be compatible with the dependencies for `cGNF`:
+   
+   - [Download Python 3.9.13](https://www.python.org/downloads/release/python-3913/)
+   
+   During the installation, make sure to tick the option `Add Python to PATH` to ensure Python is accessible from the command line.
+
+3. **Install RcGNF**:
 
    In R or RStudio, install the RcGNF package using the following command:
 
    ```R
    devtools::install_github("cGNF-Dev/RcGNF")
    ```
-
-3. **Load RcGNF**:
+   If prompted to specify the Python path during installation, type which python in the terminal (on macOS/Linux) or where python in the Command Prompt (on Windows) to retrieve it.
+   
+6. **Load RcGNF**:
 
    Once installed, load the package using:
 
