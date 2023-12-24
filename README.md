@@ -81,7 +81,7 @@ This guide will help you install and utilize `RcGNF` within an R environment.
    Define your DAG structure using the `igraph`:
     
    ```python
-   Your_DAG_name <- graph_from_edgelist(matrix(c("parent", "child"), ncol  =  2, byrow  =  TRUE), directed  =  TRUE)
+   Your_DAG_name <- graph_from_edgelist(matrix(c("parent1", "child1"，"parent1", "child2"，"parent2", "child1"), ncol  =  2, byrow  =  TRUE), directed  =  TRUE)
    ```
     
    For example, with a simple DAG X &rarr; Y &rarr; Z, the argument will be as follows:
