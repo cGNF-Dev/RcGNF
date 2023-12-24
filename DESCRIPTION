@@ -1,11 +1,18 @@
 Package: RcGNF
 Type: Package
-Title: What the Package Does (Title Case)
+Title: R Wrapper for causal-Graphical Normalizing Flows (cGNF)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: cGNF-Team
+Maintainer: Jesse Zhou <zhou.jesse2@gmail.com>
+Description: This package provides a wrapper for the causal-Graphical Normalizing Flows (cGNF), 
+    which focuses on answering causal questions using deep learning models based on Graphical Normalizing Flows 
+    and Unconstrained Monotonic Neural Networks. The package allows users to process datasets, train models, 
+    and simulate interventions and potential outcomes based on specified causal structures.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends:
+    R (>= 3.5.0)
+Imports:
+    igraph,
+    reticulate
