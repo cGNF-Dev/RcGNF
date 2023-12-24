@@ -48,7 +48,7 @@ This guide will help you install and utilize `RcGNF` within an R environment.
    ```
    If prompted to specify the Python path during installation, type which python in the terminal (on macOS/Linux) or where python in the Command Prompt (on Windows) to retrieve it.
    
-6. **Load RcGNF**:
+4. **Load RcGNF**:
 
    Once installed, load the package using:
 
