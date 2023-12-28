@@ -1,9 +1,15 @@
 find_system_python <- function() {
   print("Finding system Python...")
+  home_dir <- normalizePath(Sys.getenv("HOME"), winslash = "/")
+
   potential_paths <- if (.Platform$OS.type == "windows") {
-    c("C:/Python39/python.exe", "C:/Python38/python.exe",
-      "C:/Python37/python.exe", "C:/Python36/python.exe",
-      "C:/Python35/python.exe", "C:/Python27/python.exe")
+    c(paste0(home_dir, "/AppData/Local/Programs/Python/Python39/python.exe"),
+      "C:/Python39/python.exe",
+      "C:/Python38/python.exe",
+      "C:/Python37/python.exe",
+      "C:/Python36/python.exe",
+      "C:/Python35/python.exe",
+      "C:/Python27/python.exe")
   } else {
     c("/usr/bin/python", "/usr/local/bin/python",
       "/opt/homebrew/bin/python", "/usr/bin/python3",
@@ -28,6 +34,12 @@ setup_cgnf <- function(python_path) {
     file.path(Sys.getenv("HOME"), ".virtualenvs", envname)
   }
 
+  # Create the virtual environment if it doesn't exist
+  if (!reticulate::virtualenv_exists(envname)) {
+    reticulate::virtualenv_create(envname, python = python_path)
+  }
+
+  # Use the virtual environment
   reticulate::use_virtualenv(envname, required = TRUE)
 
   # Check if cGNF is already installed
@@ -42,9 +54,7 @@ setup_cgnf <- function(python_path) {
                            pip_options = c(sprintf("--index-url %s", index_url),
                                            sprintf("--extra-index-url %s", extra_index_url)))
 
-    message("cGNF is successfully installed in the virtual environment: ", envname)
-  } else {
-    message("cGNF is already installed in the virtual environment: ", envname)
+    message("RcGNF virtual environment is now installed and ready to use in: ", envname)
   }
 }
 
@@ -58,7 +68,7 @@ setup_cgnf <- function(python_path) {
 
   # Check if the virtual environment already exists
   if (dir.exists(venv_path)) {
-    message("cGNF is already installed in the virtual environment: ", venv_path)
+    message("RcGNF virtual environment found and ready for use")
     return()
   }
 
