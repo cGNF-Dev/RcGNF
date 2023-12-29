@@ -49,9 +49,9 @@ This guide will help you install and utilize `RcGNF` within an R environment.
    
    If you encounter the error message `Python installation not found in common locations. Please set the RCGNF_PYTHON_PATH environment variable to your Python installation and reload the package`, proceed as follows:
 
-   1. Find the Python path by typing `which python` (macOS/Linux) or `where python` (Windows) in the terminal/Command Prompt.
+   1. Find the Python path by typing `which python` (macOS/Linux) or `where python` (Windows) in the terminal or Command Prompt.
 
-   2. Set the variable in R/RStudio:
+   2. Set the `RCGNF_PYTHON_PATH` environment variable in R or RStudio:
 
    ```R
    Sys.setenv(RCGNF_PYTHON_PATH = "/your/python/path")
