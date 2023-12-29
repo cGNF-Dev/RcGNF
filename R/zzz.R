@@ -35,7 +35,11 @@ setup_cgnf <- function(python_path) {
   # Create the virtual environment if it doesn't exist
   if (!reticulate::virtualenv_exists(envname)) {
     reticulate::virtualenv_create(envname, python = python_path)
+    if (!reticulate::virtualenv_exists(envname)) {
+      stop("Failed to create virtual environment: ", envname)
+    }
   }
+
 
   # Use the virtual environment
   reticulate::use_virtualenv(envname, required = TRUE)
@@ -73,18 +77,14 @@ setup_cgnf <- function(python_path) {
   # Find system Python if the virtual environment does not exist
   python_path <- find_system_python()
   if (is.null(python_path)) {
-    message("Python installation not found in common locations.")
-    python_path <- readline(prompt = "Please enter the path to your Python installation: ")
+    python_path <- Sys.getenv("RCGNF_PYTHON_PATH")
     if (python_path == "") {
-      stop("No Python path provided. Exiting.")
+      stop("Python installation not found in common locations. Please set the RCGNF_PYTHON_PATH environment variable to your Python installation and reload the package.")
     } else if (!file.exists(python_path)) {
-      stop("The specified Python path does not exist. Exiting.")
+      stop("The path in RCGNF_PYTHON_PATH does not exist. Please correct the RCGNF_PYTHON_PATH environment variable.")
     }
   }
 
   # Set up the virtual environment and install cGNF
   setup_cgnf(python_path)
 }
-
-
-
