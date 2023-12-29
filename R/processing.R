@@ -9,7 +9,7 @@ process <- function(path = "", dataset_name = "", dag_name = "DAG",
   if (!is.null(seed)) {
     seed <- as.integer(seed)
   } else {
-    seed <- reticulate::py$None  # Explicitly set to Python's None
+    seed <- NULL  # Explicitly set to Python's None
   }
 
   # If sens_corr is provided, convert it to a Python dictionary
