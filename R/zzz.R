@@ -63,11 +63,11 @@ setup_cgnf <- function(python_path) {
 }
 
 .onLoad <- function(libname, pkgname) {
-  # Construct the path to the virtual environment
+  # Path to the virtual environment
   venv_path <- if (.Platform$OS.type == "windows") {
-    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env")
+    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env", "Scripts", "python.exe")
   } else {
-    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env")
+    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env", "bin", "python")
   }
 
   # Check if the virtual environment already exists
