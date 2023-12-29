@@ -27,9 +27,9 @@ This guide will help you install and utilize `RcGNF` within an R environment.
 
 ## Setting up RcGNF
 
-1. **Install R**:
+1. **Install RStudio**:
    
-   Ensure you have the latest version of R installed on your system.
+   Ensure you have RStudio installed on your system.
 
 2. **Install Python**:
    
@@ -41,7 +41,7 @@ This guide will help you install and utilize `RcGNF` within an R environment.
 
 3. **Install RcGNF**:
 
-   In R or RStudio, install the RcGNF package using the following command:
+   In RStudio, install the RcGNF package using the following command:
 
    ```R
    devtools::install_github("cGNF-Dev/RcGNF")
