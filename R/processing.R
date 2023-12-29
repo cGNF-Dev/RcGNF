@@ -14,7 +14,7 @@ process <- function(path = "", dataset_name = "", dag_name = "DAG",
 
   # If sens_corr is provided, convert it to a Python dictionary
   if (!is.null(sens_corr)) {
-    sens_corr_py <- reticulate::dict(sens_corr)
+    sens_corr_py <- r_to_py(sens_corr)
   } else {
     sens_corr_py <- NULL
   }
