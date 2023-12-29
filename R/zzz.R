@@ -63,30 +63,34 @@ setup_cgnf <- function(python_path) {
 }
 
 .onLoad <- function(libname, pkgname) {
-  # Construct the path to the virtual environment
+  # Path to the virtual environment
   venv_path <- if (.Platform$OS.type == "windows") {
-    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env")
+    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env", "Scripts", "python.exe")
   } else {
-    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env")
+    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env", "bin", "python")
   }
 
   # Check if the virtual environment already exists
-  if (dir.exists(venv_path)) {
-    message("RcGNF virtual environment found and ready for use")
-    return()
-  }
-
-  # Find system Python if the virtual environment does not exist
-  python_path <- find_system_python()
-  if (is.null(python_path)) {
-    python_path <- Sys.getenv("RCGNF_PYTHON_PATH")
-    if (python_path == "") {
-      stop("Python installation not found in common locations. Please set the RCGNF_PYTHON_PATH environment variable to your Python installation and reload the package.")
-    } else if (!file.exists(python_path)) {
-      stop("The path in RCGNF_PYTHON_PATH does not exist. Please correct the RCGNF_PYTHON_PATH environment variable.")
+  if (file.exists(venv_path)) {
+    # Use the Python executable from the virtual environment
+    reticulate::use_python(venv_path, required = TRUE)
+    # Check if cGNF is installed in the environment
+    if (!"cGNF" %in% reticulate::py_list_packages()$package) {
+      stop("cGNF is not installed in the virtual environment. Please reinstall the RcGNF package.")
     }
+  } else {
+    # Find system Python if the virtual environment does not exist
+    python_path <- find_system_python() 
+    if (is.null(python_path)) {
+      python_path <- Sys.getenv("RCGNF_PYTHON_PATH")
+      if (python_path == "") {
+        stop("Python installation not found in common locations. Please set the RCGNF_PYTHON_PATH environment variable to your Python installation and reload the package.")
+      } else if (!file.exists(python_path)) {
+        stop("The path in RCGNF_PYTHON_PATH does not exist. Please correct the RCGNF_PYTHON_PATH environment variable.")
+      }
+    }
+    # Set up the virtual environment and install cGNF
+    setup_cgnf(python_path)
   }
-
-  # Set up the virtual environment and install cGNF
-  setup_cgnf(python_path)
 }
+
