@@ -12,16 +12,9 @@ process <- function(path = "", dataset_name = "", dag_name = "DAG",
     seed <- NULL 
   }
 
-  # If sens_corr is provided, convert it to a Python dictionary
-  if (!is.null(sens_corr)) {
-    sens_corr_py <- r_to_py(sens_corr)
-  } else {
-    sens_corr_py <- NULL
-  }
-
   # Call the process function from the cGNF Python module
   result_py <- cgnf$process(path, dataset_name, dag_name,
-                            sens_corr_py, test_size, cat_var, seed)
+                            sens_corr, test_size, cat_var, seed)
 
   return(result_py)
 }
