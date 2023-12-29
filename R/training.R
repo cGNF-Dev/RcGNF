@@ -6,10 +6,16 @@ train <- function(path = "", dataset_name = "", model_name = "models",
   # Import the cGNF Python module
   cgnf <- reticulate::import("cGNF")
 
+  # Handle the seed parameter
+  if (!is.null(seed)) {
+    seed <- as.integer(seed)
+  } else {
+    seed <- reticulate::py$None  # Explicitly set to Python's None
+  }
+  
   # Explicitly convert number to integers
   trn_batch_size <- as.integer(trn_batch_size)
   val_batch_size <- as.integer(val_batch_size)
-  seed <- as.integer(seed)
   nb_epoch <- as.integer(nb_epoch)
   nb_estop <- as.integer(nb_estop)
   val_freq <- as.integer(val_freq)
