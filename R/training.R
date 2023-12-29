@@ -10,7 +10,7 @@ train <- function(path = "", dataset_name = "", model_name = "models",
   if (!is.null(seed)) {
     seed <- as.integer(seed)
   } else {
-    seed <- reticulate::py$None  # Explicitly set to Python's None
+    seed <- NULL 
   }
   
   # Explicitly convert number to integers
