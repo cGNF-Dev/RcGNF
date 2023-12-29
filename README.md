@@ -51,8 +51,12 @@ This guide will help you install and utilize `RcGNF` within an R environment.
 
    1. Find the Python path by typing `which python` (macOS/Linux) or `where python` (Windows) in the terminal/Command Prompt.
 
-   2. Set the variable in R/RStudio: `Sys.setenv(RCGNF_PYTHON_PATH = "/your/python/path")`.
+   2. Set the variable in R/RStudio:
 
+   ```R
+   Sys.setenv(RCGNF_PYTHON_PATH = "/your/python/path")
+   ```
+   
    3. Reinstall the RcGNF package.
    
 5. **Load RcGNF**:
