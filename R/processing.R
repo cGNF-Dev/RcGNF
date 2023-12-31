@@ -13,8 +13,8 @@ process <- function(path = "", dataset_name = "", dag_name = "DAG",
   }
 
   # Call the process function from the cGNF Python module
-  result_py <- cgnf$process(path, dataset_name, dag_name,
-                            sens_corr, test_size, cat_var, seed)
+  result_py <- capture.output(cgnf$process(path, dataset_name, dag_name,
+                            sens_corr, test_size, cat_var, seed))
 
   return(result_py)
 }
