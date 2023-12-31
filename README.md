@@ -174,7 +174,7 @@ Additionally, a **`bootstrap`** function is provided to facilitate parallel exec
         dag_name =  'you_adj_mat_name',  # Name of the adjacency matrix (DAG) to be used
         test_size = 0.2,  # Proportion of data used for the validation set
         cat_var = c('X', 'Y'),  # List of categorical variables
-        sens_corr = dict(list(tuple("A", "Y")  =  0.15, tuple("M", "Y")  =  0.2)), # Vector of sensitivity parameters (i.e., normalized disturbance correlations)
+        sens_corr = list(`("A", "Y")` = 0.15, `("M", "Y")` = 0.2), # Vector of sensitivity parameters (i.e., normalized disturbance correlations)
         seed = NULL  # Seed for reproducibility
     )
    ```
