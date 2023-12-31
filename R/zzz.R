@@ -11,7 +11,9 @@ find_system_python <- function() {
       "C:/Python35/python.exe",
       "C:/Python27/python.exe")
   } else {
-    c("/usr/bin/python")
+    c("/usr/bin/python", "/usr/local/bin/python",
+      "/opt/homebrew/bin/python", "/usr/bin/python3",
+      "/usr/local/bin/python3")
   }
 
   for (path in potential_paths) {
