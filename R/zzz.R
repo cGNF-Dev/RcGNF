@@ -61,33 +61,35 @@ setup_cgnf <- function(python_path) {
 }
 
 .onLoad <- function(libname, pkgname) {
+  # Define the virtual environment name
+  envname <- "cgnf_env"
+
   # Path to the virtual environment
   venv_path <- if (.Platform$OS.type == "windows") {
-    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env", "Scripts", "python.exe")
+    file.path(Sys.getenv("HOME"), ".virtualenvs", envname, "Scripts", "python.exe")
   } else {
-    file.path(Sys.getenv("HOME"), ".virtualenvs", "cgnf_env", "bin", "python")
+    file.path(Sys.getenv("HOME"), ".virtualenvs", envname, "bin", "python")
   }
 
   # Check if the virtual environment already exists
-  if (dir.exists(venv_path)) {
+  if (reticulate::virtualenv_exists(envname)) {
     message("RcGNF virtual environment found and ready for use")
     # Use the Python executable from the virtual environment
     reticulate::use_python(venv_path, required = TRUE)
-    return()
-  }
-
-  # Find system Python if the virtual environment does not exist
-  python_path <- find_system_python()
-  if (is.null(python_path)) {
-    python_path <- Sys.getenv("RCGNF_PYTHON_PATH")
-    if (python_path == "") {
-      stop("Python installation not found in common locations. Please set the RCGNF_PYTHON_PATH environment variable to your Python installation and reload the package.")
-    } else if (!file.exists(python_path)) {
-      stop("The path in RCGNF_PYTHON_PATH does not exist. Please correct the RCGNF_PYTHON_PATH environment variable.")
+  } else {
+    # Find system Python if the virtual environment does not exist
+    python_path <- find_system_python()
+    if (is.null(python_path)) {
+      python_path <- Sys.getenv("RCGNF_PYTHON_PATH")
+      if (python_path == "") {
+        stop("Python installation not found in common locations. Please set the RCGNF_PYTHON_PATH environment variable to your Python installation and reload the package.")
+      } else if (!file.exists(python_path)) {
+        stop("The path in RCGNF_PYTHON_PATH does not exist. Please correct the RCGNF_PYTHON_PATH environment variable.")
+      }
     }
-  }
 
-  # Set up the virtual environment and install cGNF
-  setup_cgnf(python_path)
+    # Set up the virtual environment and install cGNF
+    setup_cgnf(python_path)
+  }
 }
 
