@@ -16,5 +16,7 @@ process <- function(path = "", dataset_name = "", dag_name = "DAG",
   output <- capture.output(result_py <- cgnf$process(path, dataset_name, dag_name,
                             sens_corr, test_size, cat_var, seed))
 
+  print("K")
+  
   return(output)
 }
