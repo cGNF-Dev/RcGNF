@@ -11,9 +11,9 @@ sim <- function(path = "", dataset_name = "", model_name = "models", n_mce_sampl
   n_mce_samples <- as.integer(n_mce_samples)
 
   # Capture the output of the Python function
-  output <- capture.output(result_py <- cgnf$sim(path, dataset_name, model_name, n_mce_samples,
+  result_py <- cgnf$sim(path, dataset_name, model_name, n_mce_samples,
                         treatment, cat_list, moderator, quant_mod,
-                        mediator, outcome, inv_datafile_name))
+                        mediator, outcome, inv_datafile_name)
 
   return(result_py)
 }
