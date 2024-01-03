@@ -26,7 +26,7 @@ train <- function(path = "", dataset_name = "", model_name = "models",
   # Capture the output of the Python function
   result_py <- cgnf$train(path, dataset_name, model_name,
                           trn_batch_size, val_batch_size, learning_rate, seed,
-                          nb_epoch, emb_net, int_net, nb_estop, val_freq))
+                          nb_epoch, emb_net, int_net, nb_estop, val_freq)
 
   return(result_py)
 }
