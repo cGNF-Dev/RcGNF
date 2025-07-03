@@ -49,14 +49,9 @@ setup_cgnf <- function(python_path) {
   # Check if cGNF is already installed
   installed_packages <- reticulate::py_list_packages(envname)
   if (!"cGNF" %in% installed_packages$package) {
-    # Installation from test PyPI
-    index_url <- "https://test.pypi.org/simple/"
-    extra_index_url <- "https://pypi.org/simple"
     reticulate::py_install(packages = "cGNF",
                            envname = envname,
-                           method = "auto",
-                           pip_options = c(sprintf("--index-url %s", index_url),
-                                           sprintf("--extra-index-url %s", extra_index_url)))
+                           method = "auto")
 
     message("RcGNF virtual environment is now installed and ready to use in: ", envname)
   }
